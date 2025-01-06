@@ -7,11 +7,15 @@
     "start": "node --experimental-strip-types .",
     "dev": "node --experimental-strip-types --watch ."
   },
+  "imports": {
+    "#src/*": "./src/*"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dockerode": "^4.0.3",
     "dotenv": "^16.4.7",
     "fastify": "^5.2.1"
   },
