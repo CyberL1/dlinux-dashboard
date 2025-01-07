@@ -1,6 +1,7 @@
 import "dotenv/config";
 import fastify from "fastify";
 import { readdirSync } from "fs";
+import "./proxy.ts";
 
 const app = fastify();
 
