@@ -10,7 +10,7 @@ export const getImages = () => {
   return images;
 };
 
-export const inspectImage = async (name: string) => {
+export const getImage = (name: string) => {
   const image = dockerode.getImage(`code-containers/${name}`);
-  return image.inspect();
+  return image;
 };

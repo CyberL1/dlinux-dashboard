@@ -12,9 +12,9 @@ export const getContainers = () => {
   return containers;
 };
 
-export const inspectContainer = (id: string) => {
+export const getContainer = (id: string) => {
   const container = dockerode.getContainer(id);
-  return container.inspect();
+  return container;
 };
 
 export const createContainer = ({ image }: CreateContainerBody) => {
