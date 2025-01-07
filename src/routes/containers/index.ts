@@ -13,9 +13,9 @@ export default (fastify: FastifyInstance) => {
     { schema: createContainerSchema },
     async (req: FastifyRequest<{ Body: CreateContainerBody }>) => {
       const container = await createContainer({ image: req.body.image });
-      container.start();
+      await container.start();
 
-      return container;
+      return container.inspect();
     },
   );
 };
