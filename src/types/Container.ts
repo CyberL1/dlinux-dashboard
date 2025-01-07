@@ -7,3 +7,11 @@ export interface Container {
 export interface CreateContainerBody {
   image: string;
 }
+
+export interface RemoveContainerParams {
+  id: string;
+}
+
+export interface RemoveContainerQuery {
+  force: string;
+}
