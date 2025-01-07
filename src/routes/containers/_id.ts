@@ -4,6 +4,6 @@ import type { FastifyInstance, FastifyRequest } from "fastify";
 
 export default (fastify: FastifyInstance) => {
   fastify.get("/", (req: FastifyRequest<{ Params: Container }>) => {
-    return inspectContainer(req.params.name);
+    return inspectContainer(req.params.id);
   });
 };
