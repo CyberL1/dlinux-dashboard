@@ -6,7 +6,7 @@ const app = fastify();
 app.all(
   "/*",
   { constraints: { host: new RegExp(`.*\.${process.env.PROXY_DOMAIN}`) } },
-  async (req) => {
+  async (req, reply) => {
     const subdomains = req.headers.host.split(".");
 
     const port = subdomains[0].startsWith("port-")
@@ -24,6 +24,8 @@ app.all(
     });
 
     const proxyResponse = await proxyRequest.text();
+    reply.header("content-type", proxyRequest.headers.get("content-type"));
+
     return proxyResponse;
   },
 );
