@@ -5,6 +5,13 @@ services:
     build: .
     ports:
       - 3000:3000
-      - 3001:3001
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+  proxy:
+    image: openresty/openresty:alpine-fat
+    env_file: .env
+    ports:
+      - 80:80
+    volumes:
+      - ./proxy.conf:/etc/nginx/conf.d/proxy.conf
+    network_mode: host
