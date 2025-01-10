@@ -13,5 +13,6 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./proxy.conf:/etc/nginx/conf.d/proxy.conf
+      - ./proxy.conf:/etc/nginx/conf.d/proxy.conf.template
     network_mode: host
+    command: /bin/sh -c "sed 's/{PROXY_DOMAIN}/$PROXY_DOMAIN/' /etc/nginx/conf.d/proxy.conf.template > /etc/nginx/conf.d/proxy.conf && nginx -g 'daemon off;'"
