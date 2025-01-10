@@ -22,10 +22,10 @@ server {
 
             set $ip '';
             rewrite_by_lua_block {
-                  local shell = require("resty.shell")
+                  local http = require("resty.http").new()
 
-                  local ok, stdout, strerr, reason, status = shell.run("curl http://127.0.0.1:3000/containers/" .. ngx.var.container .. "/ip")
-                  ngx.var.ip = stdout
+                  local res, err = http:request_uri("http://127.0.0.1:3000/containers/" .. ngx.var.container .. "/ip")
+                  ngx.var.ip = res.body
             }
 
             proxy_pass http://$ip:$port;

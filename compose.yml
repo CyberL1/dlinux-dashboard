@@ -8,11 +8,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
   proxy:
-    image: openresty/openresty:alpine-fat
+    build: proxy
     env_file: .env
     ports:
       - 80:80
     volumes:
-      - ./proxy.conf:/etc/nginx/conf.d/proxy.conf.template
+      - ./proxy/proxy.conf.template:/etc/nginx/conf.d/proxy.conf.template
     network_mode: host
     command: /bin/sh -c "sed 's/{PROXY_DOMAIN}/$PROXY_DOMAIN/' /etc/nginx/conf.d/proxy.conf.template > /etc/nginx/conf.d/proxy.conf && nginx -g 'daemon off;'"
