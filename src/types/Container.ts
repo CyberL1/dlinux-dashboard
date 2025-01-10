@@ -5,6 +5,7 @@ export interface Container {
 }
 
 export interface CreateContainerBody {
+  name: string;
   image: string;
 }
 

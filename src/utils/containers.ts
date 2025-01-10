@@ -17,8 +17,9 @@ export const getContainer = (id: string) => {
   return container;
 };
 
-export const createContainer = ({ image }: CreateContainerBody) => {
+export const createContainer = ({ name, image }: CreateContainerBody) => {
   const container = dockerode.createContainer({
+    name,
     Image: `code-containers/${image}`,
     Labels: {
       "code-containers.image": image,
