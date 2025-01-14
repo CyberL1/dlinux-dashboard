@@ -1,5 +1,5 @@
 import type { Container } from "#src/types/Container.ts";
-import { getContainer } from "#src/utils/containers.ts";
+import { getContainer, getContainerResponse } from "#src/utils/containers.ts";
 import type { FastifyInstance, FastifyRequest } from "fastify";
 
 export default (fastify: FastifyInstance) => {
@@ -7,6 +7,6 @@ export default (fastify: FastifyInstance) => {
     const container = getContainer(req.params.id);
 
     await container.restart();
-    return container.inspect();
+    return getContainerResponse(container);
   });
 };
