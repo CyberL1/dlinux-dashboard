@@ -6,6 +6,9 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Containers, {
   Loader as ContainersLoader,
 } from "./pages/containers/index.tsx";
+import ContainerPage, {
+  Loader as ContainerPageLoader,
+} from "./pages/containers/[name].tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +20,11 @@ const router = createBrowserRouter([
         path: "/containers",
         element: <Containers />,
         loader: ContainersLoader,
+      },
+      {
+        path: "/containers/:name",
+        element: <ContainerPage />,
+        loader: ContainerPageLoader,
       },
     ],
   },

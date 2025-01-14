@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate } from "react-router";
+import { useLoaderData } from "react-router";
 import { Container } from "../../types";
 import {
   Button,
@@ -18,7 +18,6 @@ export async function Loader() {
 
 export default function Containers() {
   const containers = useLoaderData() as Container[];
-  const navigate = useNavigate();
 
   return (
     <>
@@ -39,16 +38,7 @@ export default function Containers() {
               Status: {container.status}
             </CardContent>
             <CardActions>
-              <Button
-                onClick={async () =>
-                  await switchPower(
-                    container.id,
-                    container.status === "running" ? "stop" : "start",
-                  )
-                }
-              >
-                Power {container.status === "running" ? "off" : "on"}
-              </Button>
+              <Button href={`/containers/${container.name}`}>Manage</Button>
               <Button
                 href={`//${container.name}.${document.location.host}`}
                 target="_blank"
@@ -62,9 +52,4 @@ export default function Containers() {
       </Grid>
     </>
   );
-
-  async function switchPower(id: string, state: string) {
-    await fetch(`/api/containers/${id}/${state}`, { method: "PUT" });
-    navigate(".", { replace: true });
-  }
 }
