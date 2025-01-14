@@ -21,8 +21,10 @@ export default (fastify: FastifyInstance) => {
         Body: CreateContainerBody;
       }>,
     ) => {
-      if (!(await getImage(req.body?.image).inspect()).Id) {
-        return;
+      if (req.body) {
+        if (!(await getImage(req.body?.image).inspect()).Id) {
+          return;
+        }
       }
 
       const oldContainer = getContainer(req.params.id);
