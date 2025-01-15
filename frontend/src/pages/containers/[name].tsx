@@ -1,8 +1,8 @@
 import { useLoaderData, useRevalidator } from "react-router";
 import { Container } from "../../types";
 import { Button, ButtonGroup, Paper, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { ContainerStats } from "dockerode";
+import { useState } from "react";
+import ContainerStats from "../../components/ContainerStats";
 
 interface Params {
   name: string;
@@ -22,24 +22,6 @@ export default function ContainerPage() {
     return "Container not found";
   }
 
-  const [stats, setStats] = useState<ContainerStats>();
-
-  useEffect(() => {
-    const statsSource = new EventSource(
-      `/api/containers/${container.name}/stats`,
-    );
-
-    statsSource.onmessage = ({ data }) => {
-      const parsed = JSON.parse(data);
-      setStats(parsed);
-    };
-
-    return () => {
-      statsSource.close();
-    };
-  }, []);
-
-  console.log("stats", stats);
   const revalidator = useRevalidator();
   const [isPowerStateLocked, setPowerStateLocked] = useState<boolean>();
 
@@ -69,7 +51,7 @@ export default function ContainerPage() {
           </Button>
         </ButtonGroup>
       </Paper>
-      CPU Usage: {stats?.cpu_stats.cpu_usage.total_usage}
+      <ContainerStats id={container.id} />
     </Paper>
   );
 
