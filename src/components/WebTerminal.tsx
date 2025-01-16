@@ -4,59 +4,61 @@ import { AttachAddon } from "@xterm/addon-attach";
 import { FitAddon } from "@xterm/addon-fit";
 import "@xterm/xterm/css/xterm.css";
 import { useLoaderData } from "react-router";
-import { Container } from "../types";
+import { InfoData } from "../types";
 
 export default function WebTerminal() {
-  const container = useLoaderData() as Container;
-  const terminalRef = useRef<HTMLDivElement>(null);
+	let container = useLoaderData();
+	container = container.data as InfoData;
 
-  useEffect(() => {
-    document.title = `Terminal: ${container.name}`;
+	const terminalRef = useRef<HTMLDivElement>(null);
 
-    if (terminalRef.current) {
-      const terminal = new Terminal({ rows: 67 });
+	useEffect(() => {
+		document.title = `Terminal: ${container.name}`;
 
-      const socket = new WebSocket(
-        `ws://127.0.0.1:3000/containers/${container.id}/terminal`,
-      );
+		if (terminalRef.current) {
+			const terminal = new Terminal({ rows: 67 });
 
-      const fitAddon = new FitAddon();
-      terminal.loadAddon(fitAddon);
+			const socket = new WebSocket(
+				`ws://127.0.0.1:3000/containers/${container.id}/terminal`,
+			);
 
-      terminal.open(terminalRef.current);
-      fitAddon.fit();
+			const fitAddon = new FitAddon();
+			terminal.loadAddon(fitAddon);
 
-      terminal.write("Connecting to the container\r\n");
+			terminal.open(terminalRef.current);
+			fitAddon.fit();
 
-      socket.onopen = () => {
-        const attachAddon = new AttachAddon(socket);
-        terminal.loadAddon(attachAddon);
+			terminal.write("Connecting to the container\r\n");
 
-        terminal.clear();
-        terminal.focus();
+			socket.onopen = () => {
+				const attachAddon = new AttachAddon(socket);
+				terminal.loadAddon(attachAddon);
 
-        socket.send(
-          JSON.stringify({
-            rows: terminal.rows,
-            cols: terminal.cols,
-          }),
-        );
-      };
+				terminal.clear();
+				terminal.focus();
 
-      window.addEventListener("resize", () => {
-        fitAddon.fit();
-      });
+				socket.send(
+					JSON.stringify({
+						rows: terminal.rows,
+						cols: terminal.cols,
+					}),
+				);
+			};
 
-      terminal.onResize(({ rows, cols }) => {
-        socket.send(JSON.stringify({ rows, cols }));
-      });
+			window.addEventListener("resize", () => {
+				fitAddon.fit();
+			});
 
-      return () => {
-        socket.close();
-        terminal.dispose();
-      };
-    }
-  }, []);
+			terminal.onResize(({ rows, cols }) => {
+				socket.send(JSON.stringify({ rows, cols }));
+			});
 
-  return <div ref={terminalRef} style={{ height: "auto" }} />;
+			return () => {
+				socket.close();
+				terminal.dispose();
+			};
+		}
+	}, []);
+
+	return <div ref={terminalRef} style={{ height: "auto" }} />;
 }

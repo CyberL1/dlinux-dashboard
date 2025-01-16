@@ -1,17 +1,15 @@
 import { useLoaderData } from "react-router";
-import { Container } from "../../../types";
+import { Container } from "../../types";
 import { Paper, Typography } from "@mui/material";
-import WebTerminal from "../../../components/WebTerminal";
+import WebTerminal from "../../components/WebTerminal";
 
-interface Params {
-  name: string;
-}
+export async function Loader() {
+	const info = await fetch(`https://api.ssh.surf/info`, {
+		headers: { "x-ssh-auth": localStorage["key"] },
+	});
 
-export async function Loader({ params }: { params: Params }) {
-  const container = await fetch(`/api/containers/${params.name}`);
-
-  const data = await container.json();
-  return data;
+	const data = await info.json();
+	return data;
 }
 
 export default function TerminalPage() {
