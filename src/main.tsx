@@ -8,6 +8,7 @@ import TerminalPage from "./pages/container/terminal.tsx";
 
 async function loader() {
 	const info = await fetch(`https://api.ssh.surf/info`, {
+		// @ts-ignore
 		headers: { "x-ssh-auth": localStorage.getItem("key") },
 	});
 

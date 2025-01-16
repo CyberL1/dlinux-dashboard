@@ -1,32 +1,25 @@
 import { useLoaderData } from "react-router";
-import { Container } from "../../types";
+import { InfoData } from "../../types";
 import { Paper, Typography } from "@mui/material";
 import WebTerminal from "../../components/WebTerminal";
 
-export async function Loader() {
-	const info = await fetch(`https://api.ssh.surf/info`, {
-		headers: { "x-ssh-auth": localStorage["key"] },
-	});
-
-	const data = await info.json();
-	return data;
-}
-
 export default function TerminalPage() {
-  const container = useLoaderData() as Container & { statusCode: number };
+	let container = useLoaderData();
 
-  if (container.statusCode === 404) {
-    return "Container not found";
-  }
+	if (!container.data) {
+		return "Container not found";
+	}
 
-  return (
-    <Paper square sx={{ padding: 1 }}>
-      <Paper sx={{ display: "flex" }} variant="outlined">
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Terminal: {container.name}
-        </Typography>
-      </Paper>
-      <WebTerminal />
-    </Paper>
-  );
+	container = container.data as InfoData;
+
+	return (
+		<Paper square sx={{ padding: 1 }}>
+			<Paper sx={{ display: "flex" }} variant="outlined">
+				<Typography variant="h6" sx={{ flexGrow: 1 }}>
+					Terminal: {container.name}
+				</Typography>
+			</Paper>
+			<WebTerminal />
+		</Paper>
+	);
 }

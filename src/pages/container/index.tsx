@@ -6,14 +6,14 @@ import ContainerInfo from "../../components/ContainerInfo";
 
 export default function ContainerPage() {
 	let container = useLoaderData();
+	const revalidator = useRevalidator();
+	const [isPowerStateLocked, setPowerStateLocked] = useState<boolean>();
+
 	if (!container.data) {
 		return "Container not found";
 	}
 
 	container = container.data as InfoData;
-
-	const revalidator = useRevalidator();
-	const [isPowerStateLocked, setPowerStateLocked] = useState<boolean>();
 
 	return (
 		<Paper square sx={{ padding: 1 }}>

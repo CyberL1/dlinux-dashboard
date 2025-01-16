@@ -8,6 +8,7 @@ export default function ContainerInfo() {
 	useEffect(() => {
 		const updateInfo = async () => {
 			const stats = await fetch(`https://api.ssh.surf/info`, {
+				// @ts-ignore
 				headers: { "x-ssh-auth": localStorage.getItem("key") },
 			});
 

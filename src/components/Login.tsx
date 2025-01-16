@@ -9,6 +9,7 @@ export default function Login() {
 		const data = Object.fromEntries(formData);
 
 		const hello = await fetch(`https://api.ssh.surf/hello`, {
+			// @ts-ignore
 			headers: { "x-ssh-auth": data.key },
 		});
 

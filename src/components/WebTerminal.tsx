@@ -58,7 +58,7 @@ export default function WebTerminal() {
 				terminal.dispose();
 			};
 		}
-	}, []);
+	}, [container]);
 
 	return <div ref={terminalRef} style={{ height: "auto" }} />;
 }
