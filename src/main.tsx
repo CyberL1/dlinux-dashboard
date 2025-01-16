@@ -5,6 +5,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import ContainerPage from "./pages/container/index.tsx";
 import TerminalPage from "./pages/container/terminal.tsx";
+import ProcessesPage from "./pages/container/processes.tsx";
 
 async function loader() {
 	const info = await fetch(`https://api.ssh.surf/info`, {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
 				path: "/container/terminal",
 				element: <TerminalPage />,
 				loader,
+			},
+			{
+				path: "/container/processes",
+				element: <ProcessesPage />,
 			},
 		],
 	},

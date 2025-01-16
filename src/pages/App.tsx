@@ -32,12 +32,7 @@ interface Item {
 const sidebarItems: Item[] = [
 	{ title: "Info", icon: "Info", href: "/container" },
 	{ title: "Terminal", icon: "Terminal", href: "/container/terminal" },
-	{
-		title: "Syscall",
-		icon: "Memory",
-		href: `//${localStorage.getItem("hostname")}.syscall.lol`,
-		openInNewTab: true,
-	},
+	{ title: "Processes", icon: "Memory", href: "/container/processes" },
 ];
 
 const drawerWidth = 240;

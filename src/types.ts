@@ -27,3 +27,9 @@ export interface InfoData {
 	created: string;
 	image: string;
 }
+
+export interface Process {
+	pid: number;
+	user: string;
+	command: string;
+}
