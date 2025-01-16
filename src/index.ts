@@ -1,8 +1,10 @@
+import fastifyWebsocket from "@fastify/websocket";
 import "dotenv/config";
 import fastify from "fastify";
 import { readdirSync } from "fs";
 
 const app = fastify();
+app.register(fastifyWebsocket);
 
 const routes = readdirSync(`${import.meta.dirname}/routes`, {
   recursive: true,

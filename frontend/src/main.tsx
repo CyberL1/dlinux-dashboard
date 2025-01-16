@@ -7,8 +7,9 @@ import Containers, {
   Loader as ContainersLoader,
 } from "./pages/containers/index.tsx";
 import ContainerPage, {
-  Loader as ContainerPageLoader,
-} from "./pages/containers/[name].tsx";
+  Loader as ContainerDataLoader,
+} from "./pages/containers/[name]/index.tsx";
+import TerminalPage from "./pages/containers/[name]/terminal.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,12 @@ const router = createBrowserRouter([
       {
         path: "/containers/:name",
         element: <ContainerPage />,
-        loader: ContainerPageLoader,
+        loader: ContainerDataLoader,
+      },
+      {
+        path: "/containers/:name/terminal",
+        element: <TerminalPage />,
+        loader: ContainerDataLoader,
       },
     ],
   },

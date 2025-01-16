@@ -1,8 +1,8 @@
 import { useLoaderData, useRevalidator } from "react-router";
-import { Container } from "../../types";
+import { Container } from "../../../types";
 import { Button, ButtonGroup, Paper, Typography } from "@mui/material";
 import { useState } from "react";
-import ContainerStats from "../../components/ContainerStats";
+import ContainerStats from "../../../components/ContainerStats";
 
 interface Params {
   name: string;
@@ -32,6 +32,9 @@ export default function ContainerPage() {
           Managing: {container.name}
         </Typography>
         <ButtonGroup>
+          <Button href={`/containers/${container.name}/terminal`}>
+            Terminal
+          </Button>
           <Button
             loading={isPowerStateLocked}
             onClick={async () => {
