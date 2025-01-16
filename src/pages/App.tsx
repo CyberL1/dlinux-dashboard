@@ -7,6 +7,7 @@ import {
 	Box,
 	createTheme,
 	Drawer,
+	FormControlLabel,
 	Icon,
 	IconButton,
 	List,
@@ -14,10 +15,12 @@ import {
 	ListItemButton,
 	ListItemIcon,
 	ListItemText,
+	Switch,
 	ThemeProvider,
 	Toolbar,
 	Tooltip,
 	Typography,
+	useColorScheme,
 } from "@mui/material";
 import * as Icons from "@mui/icons-material";
 import { useState } from "react";
@@ -40,7 +43,7 @@ const sidebarItems: Item[] = [
 
 const drawerWidth = 240;
 
-const darkTheme = createTheme({
+const theme = createTheme({
 	colorSchemes: {
 		dark: true,
 	},
@@ -48,9 +51,14 @@ const darkTheme = createTheme({
 
 function App({ error }: { error?: boolean }) {
 	const [isOpen, setOpen] = useState(false);
+	const { mode, setMode } = useColorScheme();
+
+	if (!mode) {
+		return null;
+	}
 
 	return (
-		<ThemeProvider theme={darkTheme}>
+		<>
 			<AppBar
 				position="fixed"
 				sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -67,6 +75,23 @@ function App({ error }: { error?: boolean }) {
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						DLinux
 					</Typography>
+					<FormControlLabel
+						control={<Switch defaultChecked={mode === "system"} />}
+						label="Automatic theme"
+						labelPlacement="start"
+						onChange={() => setMode(mode === "system" ? "light" : "system")}
+					/>
+					{mode != "system" && (
+						<IconButton
+							onClick={() => setMode(mode === "dark" ? "light" : "dark")}
+						>
+							{mode === "dark" ? (
+								<Icons.LightMode />
+							) : (
+								<Icons.DarkMode htmlColor="#fff" />
+							)}
+						</IconButton>
+					)}
 				</Toolbar>
 			</AppBar>
 			<Drawer
@@ -114,8 +139,14 @@ function App({ error }: { error?: boolean }) {
 				{error && <ErrorPage />}
 				{localStorage.getItem("key") ? <Outlet /> : <Login />}
 			</Box>
-		</ThemeProvider>
+		</>
 	);
 }
 
-export default App;
+export default function ToggleColorMode() {
+	return (
+		<ThemeProvider theme={theme}>
+			<App />
+		</ThemeProvider>
+	);
+}
