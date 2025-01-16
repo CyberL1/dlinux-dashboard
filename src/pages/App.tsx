@@ -5,6 +5,7 @@ import "@fontsource/roboto/700.css";
 import {
 	AppBar,
 	Box,
+	createTheme,
 	Drawer,
 	Icon,
 	IconButton,
@@ -13,6 +14,7 @@ import {
 	ListItemButton,
 	ListItemIcon,
 	ListItemText,
+	ThemeProvider,
 	Toolbar,
 	Typography,
 } from "@mui/material";
@@ -37,11 +39,17 @@ const sidebarItems: Item[] = [
 
 const drawerWidth = 240;
 
+const darkTheme = createTheme({
+	colorSchemes: {
+		dark: true,
+	},
+});
+
 function App({ error }: { error?: boolean }) {
 	const [isOpen, setOpen] = useState(false);
 
 	return (
-		<>
+		<ThemeProvider theme={darkTheme}>
 			<AppBar
 				position="fixed"
 				sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -103,7 +111,7 @@ function App({ error }: { error?: boolean }) {
 				{error && <ErrorPage />}
 				{localStorage.getItem("key") ? <Outlet /> : <Login />}
 			</Box>
-		</>
+		</ThemeProvider>
 	);
 }
 
