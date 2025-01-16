@@ -26,11 +26,18 @@ interface Item {
 	title: string;
 	icon: keyof typeof Icons;
 	href: string;
+	openInNewTab?: boolean;
 }
 
 const sidebarItems: Item[] = [
 	{ title: "Info", icon: "Info", href: "/container" },
 	{ title: "Terminal", icon: "Terminal", href: "/container/terminal" },
+	{
+		title: "Syscall",
+		icon: "Memory",
+		href: `//${localStorage.getItem("hostname")}.syscall.lol`,
+		openInNewTab: true,
+	},
 ];
 
 const drawerWidth = 240;
@@ -80,6 +87,7 @@ function App({ error }: { error?: boolean }) {
 							key={item.title}
 							component={Link}
 							to={item.href}
+							target={item.openInNewTab ? "_blank" : "_self"}
 							disablePadding
 						>
 							<ListItemButton>

@@ -17,6 +17,7 @@ export default function Login() {
 
 		if (json.message.startsWith("Hello")) {
 			localStorage.setItem("key", data.key.toString());
+			localStorage.setItem("hostname", json.message.slice(7).replace("!", ""));
 			location.reload();
 		}
 	}

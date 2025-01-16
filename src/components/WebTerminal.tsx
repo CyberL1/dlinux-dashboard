@@ -19,7 +19,7 @@ export default function WebTerminal() {
 			const terminal = new Terminal({ rows: 67 });
 
 			const socket = new WebSocket(
-				`ws://127.0.0.1:3000/containers/${container.id}/terminal`,
+				`ws://127.0.0.1:3000/containers/${container.id}/terminal`, // TODO: Replace this with dlinux ssh connector
 			);
 
 			const fitAddon = new FitAddon();
