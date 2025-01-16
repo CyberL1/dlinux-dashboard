@@ -19,7 +19,7 @@ export default function ContainerPage() {
 		<Paper square sx={{ padding: 1 }}>
 			<Paper sx={{ display: "flex" }} variant="outlined">
 				<Typography variant="h6" sx={{ flexGrow: 1 }}>
-					Managing: {container.name}
+					State: {container.state.Status}
 				</Typography>
 				<ButtonGroup>
 					<Button
@@ -48,8 +48,9 @@ export default function ContainerPage() {
 	async function switchPowerState(state: string) {
 		setPowerStateLocked(true);
 
-		const res = await fetch(`/api/containers/${container.name}/${state}`, {
-			method: "PUT",
+		const res = await fetch(`https://api.ssh.surf/${state}`, {
+			// @ts-ignore
+			headers: { "x-ssh-auth": localStorage.getItem("key") },
 		});
 
 		if (res.ok) {

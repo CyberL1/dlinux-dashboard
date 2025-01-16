@@ -22,5 +22,10 @@ export default function ContainerInfo() {
 		return "Fetching container info...";
 	}
 
-	return (<Typography>Hostname: {info.name}</Typography>);
+	return (
+		<>
+			<Typography>Hostname: {info.name}</Typography>
+			<Typography>Memory: {info.memory}</Typography>
+		</>
+	);
 }
