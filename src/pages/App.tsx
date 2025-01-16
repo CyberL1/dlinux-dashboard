@@ -16,6 +16,7 @@ import {
 	ListItemText,
 	ThemeProvider,
 	Toolbar,
+	Tooltip,
 	Typography,
 } from "@mui/material";
 import * as Icons from "@mui/icons-material";
@@ -86,20 +87,22 @@ function App({ error }: { error?: boolean }) {
 				<Toolbar />
 				<List>
 					{sidebarItems.map((item) => (
-						<ListItem
-							key={item.title}
-							component={Link}
-							to={item.href}
-							target={item.openInNewTab ? "_blank" : "_self"}
-							disablePadding
-						>
-							<ListItemButton>
-								<ListItemIcon>
-									<Icon component={Icons[item.icon]} />
-								</ListItemIcon>
-								<ListItemText primary={item.title} />
-							</ListItemButton>
-						</ListItem>
+						<Tooltip title={item.title} placement="left" arrow>
+							<ListItem
+								key={item.title}
+								component={Link}
+								to={item.href}
+								target={item.openInNewTab ? "_blank" : "_self"}
+								disablePadding
+							>
+								<ListItemButton>
+									<ListItemIcon>
+										<Icon component={Icons[item.icon]} />
+									</ListItemIcon>
+									<ListItemText primary={item.title} />
+								</ListItemButton>
+							</ListItem>
+						</Tooltip>
 					))}
 				</List>
 			</Drawer>
