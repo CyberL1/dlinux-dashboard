@@ -75,13 +75,13 @@ export default function WebTerminal() {
 				}
 			});
 
-			window.addEventListener("resize", () => {
-				fitAddon.fit();
-			});
+			// window.addEventListener("resize", () => {
+			// 	fitAddon.fit();
+			// });
 
-			terminal.onResize(({ rows, cols }) => {
-				socket.send(JSON.stringify({ rows, cols }));
-			});
+			// terminal.onResize(({ rows, cols }) => {
+			// 	socket.send(JSON.stringify({ rows, cols }));
+			// });
 
 			return () => {
 				socket.close();
